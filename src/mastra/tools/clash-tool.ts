@@ -22,17 +22,15 @@ const clashWorkflowTool = createTool({
             throw new Error('Clash workflow not found');
         }
 
-        const run = workflow.createRun();
+        const run = await workflow.createRunAsync();
         const result = await run.start({
             inputData: { userInput },
         });
-
+        console.log(result);
         if (result.status === 'success') {
             return result.result;
-        } else if (result.status === 'failed') {
-            throw new Error(`Workflow execution failed: ${result.error}`);
-        } else {
-            throw new Error(`Workflow execution failed with status: ${result.status}`);
+        } else{
+            return
         }
     },
 });

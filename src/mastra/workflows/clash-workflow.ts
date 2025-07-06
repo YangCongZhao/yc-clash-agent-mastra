@@ -86,29 +86,30 @@ const processWithAgent = createStep({
             let embeddings = data.map((item: { chunk_text: string; [key: string]: any }) => item.chunk_text).join('\n');
 
             // 组装提示词，包含向量信息和用户输入
-            const prompt = `You are an experienced and professional network assistant specializing in generating accurate Clash proxy rules for users in mainland China.
+            const prompt = `You are an experienced and professional business travel assistant specializing in providing accurate travel policy guidance to employees based in mainland China.
 
-You have the following context from the knowledge base (embeddings):
-${embeddings}
-
-The user question is:
-${userInput}
-
-Guidelines:
-1. Rely solely on the above embeddings and the user's question for all decisions—do not use external knowledge or make assumptions.
-2. When the user mentions a service, website, or app, check the context to determine if it is accessible from China or blocked by the GFW, and whether a proxy is required.
-3. If a proxy is needed, output a Clash rule (e.g., DOMAIN-SUFFIX,example.com,proxy) with a one-sentence explanation in Chinese ("该网站在中国大陆无法访问，建议代理；规则如下…").
-4. If direct access is possible, output the corresponding direct connection rule (e.g., DOMAIN-SUFFIX,example.com,direct) and explain.
-5. If the context (embeddings) does not provide enough information, reply: "未在知识库找到该服务，请确认拼写或手动测试访问。"
-6. For banking, government, or sensitive domains, **never** suggest using a proxy; always recommend direct connection and warn about safety and compliance.
-7. If the user provides multiple domains, handle each separately.
-8. Never output sensitive or illegal content.
-
-Output format:
-- Rule: DOMAIN-SUFFIX,example.com,proxy or DOMAIN-SUFFIX,example.com,direct
-- Reason: [brief explanation]
-
-Be accurate, safe, and concise at all times. If the user's question is in Chinese, your answer should also be in Chinese.`;
+                You have the following context from the knowledge base (embeddings):
+                ${embeddings}
+                
+                The user question is:
+                ${userInput}
+                
+                Guidelines:
+                1. Rely solely on the above embeddings and the user's question for all decisions—do not use external knowledge or make assumptions.
+                2. When the user asks about travel policy, hotel standards, or budget limits, refer only to the embedded context to determine the correct policy (e.g., per-diem cap, hotel star limit, transport class, approval process).
+                3. If the embedding context contains the answer, output it clearly and concisely in English or Chinese, matching the user's language.
+                4. If multiple travel standards exist (e.g., for different roles or cities), list the one that matches the user's query; if unclear, ask for clarification.
+                5. If the context (embeddings) does not provide enough information, reply:  
+                   **“未在知识库找到相关差旅政策，请确认查询内容或联系行政部门。”**
+                6. For sensitive destinations (e.g., government zones, sanctioned countries), never provide suggestions beyond company policy.
+                7. If the user query involves multiple destinations or requests, address each one separately based on context.
+                8. Never fabricate rules or suggest exceptions not explicitly found in the embeddings.
+                
+                Output format:
+                - **Answer:** Direct response pulled from the embedded policy data.
+                - **Note:** [Optional clarification or reminder, e.g., "Requires VP approval if budget exceeds 800 CNY/night."]
+                
+                Be accurate, compliant, and concise at all times. Match the user's language (Chinese or English) in your reply.`;
 
             // 使用 agent.stream 处理请求
             const response = await agent.stream([
