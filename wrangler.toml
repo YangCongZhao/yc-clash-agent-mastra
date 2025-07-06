@@ -1,5 +1,5 @@
 name = "travel-agent"
-main = "src/index.ts"
+main = ".mastra/output/index.mjs"
 compatibility_date = "2025-07-06"
 
 [build]
