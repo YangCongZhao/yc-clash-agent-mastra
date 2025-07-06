@@ -1,0 +1,6 @@
+name = "travel-agent"
+main = "src/index.ts"
+compatibility_date = "2025-07-06"
+
+[build]
+command = "pnpm install && pnpm build"
