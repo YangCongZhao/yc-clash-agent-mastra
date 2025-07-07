@@ -4,9 +4,9 @@ import { z } from 'zod';
 // 创建一个工具，将工作流包装为工具
 const clashWorkflowTool = createTool({
     id: 'clash-workflow-tool',
-    description: 'Generate Clash proxy rules based on user input using embeddings and knowledge base',
+    description: 'Generate Clash proxy.cjs rules based on user input using embeddings and knowledge base',
     inputSchema: z.object({
-        userInput: z.string().describe('The user input to generate Clash proxy rules for'),
+        userInput: z.string().describe('The user input to generate Clash proxy.cjs rules for'),
     }),
     outputSchema: z.object({
         result: z.string(),

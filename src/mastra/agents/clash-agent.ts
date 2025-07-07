@@ -1,8 +1,5 @@
-import {deepseek} from '@ai-sdk/deepseek';
 import { openai } from '@ai-sdk/openai';
 import {Agent} from '@mastra/core/agent';
-import {Memory} from '@mastra/memory';
-import {LibSQLStore} from '@mastra/libsql';
 import {clashWorkflowTool} from "../tools/clash-tool";
 
 export const clashAgent = new Agent({
@@ -25,9 +22,4 @@ Be concise, accurate, and policy-compliant.
 `,
     model: openai('gpt-4o-mini'),
     tools: {clashWorkflowTool},
-    memory: new Memory({
-        storage: new LibSQLStore({
-            url: "file:../memory.db"
-        }),
-    }),
 });

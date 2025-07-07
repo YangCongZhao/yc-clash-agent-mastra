@@ -1,6 +1,0 @@
-name = "travel-agent"
-main = ".mastra/output/index.mjs"
-compatibility_date = "2025-07-06"
-
-[build]
-command = "pnpm install && pnpm build"
